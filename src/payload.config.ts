@@ -8,9 +8,12 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
-import { Media } from './collections/Media'
 import Blog from './collections/Blog'
 import Contract from './collections/Contract'
+import Workflow from './collections/Workflow'
+import WorkflowLogs from './collections/WorkflowLogs'
+import WorkflowTriggerPlugin from './plugins/WorkflowTriggerPlugin'
+import workflowRoutes from './endpoints/workflowRoutes'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Blog, Contract],
+  collections: [Users, Blog, Contract, Workflow, WorkflowLogs],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -34,6 +37,8 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    WorkflowTriggerPlugin(),
     // storage-adapter-placeholder
   ],
+  endpoints: workflowRoutes,
 })
