@@ -149,7 +149,13 @@ export interface User {
  */
 export interface Blog {
   id: string;
+  /**
+   * Enter the blog post title
+   */
   title: string;
+  /**
+   * Main content of the blog post
+   */
   content?: {
     root: {
       type: string;
@@ -165,6 +171,9 @@ export interface Blog {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Check this to publish the blog post
+   */
   published?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -175,8 +184,17 @@ export interface Blog {
  */
 export interface Contract {
   id: string;
+  /**
+   * Title of the contract
+   */
   title: string;
+  /**
+   * Parties involved in this contract
+   */
   partiesInvolved: string;
+  /**
+   * Current status of the contract
+   */
   status?: ('drafts' | 'pending' | 'approved' | 'rejected') | null;
   updatedAt: string;
   createdAt: string;
@@ -187,15 +205,30 @@ export interface Contract {
  */
 export interface Workflow {
   id: string;
+  /**
+   * A unique name for this workflow
+   */
   name: string;
+  /**
+   * Select the collection this workflow applies to
+   */
   collectionSlug: 'blogs' | 'contracts';
+  /**
+   * Define the sequence of approval steps
+   */
   steps?:
     | {
         label: string;
+        /**
+         * Who will handle this step
+         */
         assignedToRole: 'admin' | 'reviewer' | 'approver';
+        /**
+         * Action type required for this step
+         */
         type: 'approve' | 'review' | 'sign' | 'comment';
         /**
-         * Only fill this if you want this step to run based on a rule. For example: amount > 10000 or status === "pending". Leave it blank to always run.
+         * Optional rule to run this step (e.g., status === "pending")
          */
         condition?: string | null;
         id?: string | null;
@@ -210,13 +243,37 @@ export interface Workflow {
  */
 export interface WorkflowLog {
   id: string;
+  /**
+   * Reference to the workflow that was triggered
+   */
   workflowId: string | Workflow;
+  /**
+   * ID of the document involved in this workflow (e.g., Blog or Contract)
+   */
   documentId: string;
+  /**
+   * Slug of the collection this log refers to (e.g., "blogs", "contracts")
+   */
   collectionSlug: string;
+  /**
+   * Label of the workflow step completed
+   */
   stepLabel: string;
+  /**
+   * User who acted on this step (if any)
+   */
   user?: (string | null) | User;
+  /**
+   * Action taken in the workflow step
+   */
   action: 'approved' | 'rejected' | 'commented';
+  /**
+   * Optional comment added during this step
+   */
   comment?: string | null;
+  /**
+   * Date and time when this step was logged
+   */
   timestamp?: string | null;
   updatedAt: string;
   createdAt: string;

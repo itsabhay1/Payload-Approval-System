@@ -2,7 +2,6 @@ import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
-import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
@@ -13,7 +12,6 @@ export default async function HomePage() {
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
     <div className="home">
@@ -27,7 +25,7 @@ export default async function HomePage() {
             width={65}
           />
         </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
+        {!user && <h1>Welcome to the Payload Approval System.</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
         <div className="links">
           <a
@@ -36,23 +34,12 @@ export default async function HomePage() {
             rel="noopener noreferrer"
             target="_blank"
           >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
+            Open Workflow Admin
           </a>
         </div>
       </div>
       <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
+        <p>Developed by Abhay Agrawal — 2025</p>
       </div>
     </div>
   )

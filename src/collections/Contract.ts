@@ -2,31 +2,42 @@ import { CollectionConfig } from "payload";
 
 
 const Contract: CollectionConfig = {
-    slug: 'contracts',
-    admin: {
-        useAsTitle: 'title'
+  slug: 'contracts',
+  admin: {
+    useAsTitle: 'title',
+  },
+  access: {
+    read: () => true,
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+      admin: {
+        description: 'Title of the contract',
+        placeholder: 'e.g., Service Agreement',
+      },
     },
-    access: {
-        read: () => true
+    {
+      name: 'partiesInvolved',
+      type: 'text',
+      required: true,
+      admin: {
+        description: 'Parties involved in this contract',
+        placeholder: 'e.g., Harsh And Krishna',
+      },
     },
-    fields: [
-        {
-            name: 'title',
-            type: 'text',
-            required: true,
-        },
-        {
-            name: 'partiesInvolved',
-            type: 'text',
-            required: true,
-        },
-        {
-            name: 'status',
-            type: 'select',
-            options: ['drafts', 'pending', 'approved', 'rejected'],
-            defaultValue: 'draft',
-        },
-    ],
+    {
+      name: 'status',
+      type: 'select',
+      options: ['drafts', 'pending', 'approved', 'rejected'],
+      defaultValue: 'draft',
+      admin: {
+        description: 'Current status of the contract',
+      },
+    },
+  ],
 };
 
 export default Contract;
